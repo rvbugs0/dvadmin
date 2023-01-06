@@ -13,6 +13,12 @@ STATUS_CHOICES = (
 )
 
 
+class WeatherInfo(CoreModel):
+    temperature = models.FloatField()
+    date_recorded  = models.DateField()
+
+
+
 class Users(CoreModel,AbstractUser):
     username = models.CharField(max_length=150, unique=True, db_index=True, verbose_name="用户账号", help_text="用户账号")
     email = models.EmailField(max_length=255, verbose_name="邮箱", null=True, blank=True, help_text="邮箱")
