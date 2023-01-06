@@ -42,8 +42,9 @@
   </template>
   
   <script>
-import { async } from 'q';
-
+import * as api from './api'
+const urlPrefix = '/api/system/weatherinfo/'
+import { request } from '@/api/service'
   export default {
     name: 'weatherinfo',
     
@@ -56,12 +57,24 @@ import { async } from 'q';
       }
     },
     methods: {
-            async getAllRecords(){
-            const res = await fetch("/weather_info_all_records");
-            const finalRes = await res.json();
-            this.listItems = finalRes;
+            // async getAllRecords(){
+            // const res = await fetch("/api/system/weatherinfo/all_records/");
+            // const finalRes = await res.json();
+            // this.listItems = finalRes;
+            getAllRecords(){
             
+            request({
+    url: urlPrefix + 'all_records/',
+    method: 'get',
+  });
+  
 
+//   finalres  = await res.Array
+// this.listItems = finalres
+  
+  
+//   api.GetList().then(result => result.data);
+//                 console.log(api.GetList(this.listItems))
 
         }
     }

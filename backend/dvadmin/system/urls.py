@@ -16,7 +16,7 @@ from dvadmin.system.views.system_config import SystemConfigViewSet
 from dvadmin.system.views.user import UserViewSet
 
 # ---------------------
-# from dvadmin.weatherinfo.views.weatherview import WeatherInfoViewSet
+from dvadmin.weatherinfo.views.weatherview import all_records
 
 
 system_url = routers.SimpleRouter()
@@ -33,7 +33,8 @@ system_url.register(r'api_white_list', ApiWhiteListViewSet)
 system_url.register(r'system_config', SystemConfigViewSet)
 system_url.register(r'message_center',MessageCenterViewSet)
 
-# system_url.register(r'weather_info_table',WeatherInfoViewSet)
+
+# system_url.register(r'weatherinfo',WeatherInfoViewSet)
 
 
 urlpatterns = [
@@ -47,6 +48,8 @@ urlpatterns = [
     path('login_log/<int:pk>/', LoginLogViewSet.as_view({'get': 'retrieve'})),
     path('dept_lazy_tree/', DeptViewSet.as_view({'get': 'dept_lazy_tree'})),
 
+
+    path('weatherinfo/all_records/',all_records)
 
 ]
 urlpatterns += system_url.urls

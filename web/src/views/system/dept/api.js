@@ -11,6 +11,7 @@ export function GetList (query) {
     method: 'get',
     params: query
   })
+
 }
 
 export function GetListAll (query) {
