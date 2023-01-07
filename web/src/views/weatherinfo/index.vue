@@ -8,11 +8,11 @@
     <br>
     <div style="margin: 20px;">
       <strong>From: </strong>
-      <input type="date" id="fromDate" name="fromDate" v-model="fromDate">
+      <input type="date" id="fromDate" name="fromDate" v-model="fromDate"  v-bind:max="today" >
       <strong style="margin-left: 20px;">To: </strong>
-      <input type="date" id="toDate" name="toDate" v-model="toDate">
+      <input type="date" id="toDate" name="toDate"  v-model="toDate"  v-bind:max="today" v-bind:min="fromDate">
 
-      <button style="margin-left: 10px;" type="button" id="submitButton" onclick="getForDates()">Submit</button>
+      <button style="margin-left: 10px;" type="button" id="submitButton" v-on:click="getDataForRange()">Submit</button>
       <button style="margin-left: 30px;" v-on:click="getAllRecords();">Show All Records</button>
 
       <br>
@@ -53,13 +53,10 @@ export default {
 
   data() {
     return {
-
       listItems: [],
       today: new Date().toISOString().substr(0, 10),
       fromDate: new Date().toISOString().substr(0, 10),
       toDate: new Date().toISOString().substr(0, 10),
-
-
     }
 
   },
@@ -67,19 +64,27 @@ export default {
     getAllRecords() {
       this.listItems = []
       var address = this;
-
-      var li = this.listItems
       request({ url: urlPrefix + 'all_records/', method: 'get', }).then(function (data) { address.listItems = data });
+    },
+    getDataForRange()
+    {
+      this.listItems = []
+      var address = this;
+      var queryparams = {}
+      queryparams.from_date = this.fromDate
+      queryparams.to_date = this.toDate
+      request({ url: urlPrefix + 'get_by_range/', method: 'get', params:queryparams }).then(function (data) { address.listItems = data });
+
+
     }
 
   }, created() {
     var address = this;
-
-    var li = this.listItems
     request({ url: urlPrefix + 'all_records/', method: 'get', }).then(function (data) { address.listItems = data });
 
+
   }, watch: {
-    fromChanged: function (newValue, oldValue) {
+    fromDate: function (newValue, oldValue) {
       this.toDate = this.today;
       // toDate.min = newDate;
 
@@ -88,14 +93,12 @@ export default {
   , mounted() {
 
 
-    var fromDateInput = document.getElementById("fromDate");
-    var toDateInput = document.getElementById("toDate");
+    // var fromDateInput = document.getElementById("fromDate");
+    // var toDateInput = document.getElementById("toDate");
 
-    fromDateInput.value = this.today;
-    fromDate.max = this.today;
-    toDateInput.value = this.today;
-    toDateInput.max = this.today;
-
+    // fromDateInput.value = this.today;
+    // toDateInput.value = this.today;
+    
 
 
 

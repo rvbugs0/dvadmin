@@ -11,14 +11,15 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 
-
 class WeatherInfoSerializer(serializers.ModelSerializer):
     temperature = serializers.FloatField(required=True)
     date_recorded = serializers.DateField(required=True)
+
     class Meta:
         model = WeatherInfo
-        fields = ['temperature','date_recorded']
+        fields = ['temperature', 'date_recorded']
         read_only_fields = ["id"]
+
 
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -27,7 +28,16 @@ def all_records(request):
     queryset = WeatherInfo.objects.all()
     read_serializer = WeatherInfoSerializer(queryset, many=True)
     return Response(read_serializer.data)
-    
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def get_by_range(request):
+    to_date = request.GET["to_date"]
+    from_date = request.GET["from_date"]
+    queryset = WeatherInfo.objects.filter(date_recorded__range=(from_date, to_date)).order_by("date_recorded")
+    read_serializer = WeatherInfoSerializer(queryset, many=True)
+    return Response(read_serializer.data)
+
 
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
@@ -35,7 +45,8 @@ def average_temperatures(request):
     # queryset = WeatherInfo.objects.all()
     # read_serializer = WeatherInfoSerializer(queryset, many=True)
     # return Response(read_serializer.data)
-    months = ['Jan', 'Feb', 'March', 'April', 'May', 'Jun', 'Jul','Aug','Sept','Oct','Nov','Dec']
+    months = ['Jan', 'Feb', 'March', 'April', 'May',
+              'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
     data = WeatherInfo.objects.all()
     monthlyData = [[0] for i in range(12)]
@@ -45,25 +56,23 @@ def average_temperatures(request):
 
     res = "["
     for i in range(len(monthlyData)-1):
-        if(len(monthlyData[i])-1>0):
-            res+="{\"month\":\""
-            res+=months[i]
-            res+="\",\"average_temp\":"
-            res+=str(sum(monthlyData[i]) / (len(monthlyData[i])-1))
-            res+="},"
-    if(len(monthlyData[11])>1):    
-        res+="{\"month\":\""
-        res+=months[11]
-        res+="\",\"average_temp\":"
-        res+=str(sum(monthlyData[11]) / (len(monthlyData[11])-1))
-        res+="}"
+        if (len(monthlyData[i])-1 > 0):
+            res += "{\"month\":\""
+            res += months[i]
+            res += "\",\"average_temp\":"
+            res += str(sum(monthlyData[i]) / (len(monthlyData[i])-1))
+            res += "},"
+    if (len(monthlyData[11]) > 1):
+        res += "{\"month\":\""
+        res += months[11]
+        res += "\",\"average_temp\":"
+        res += str(sum(monthlyData[11]) / (len(monthlyData[11])-1))
+        res += "}"
     else:
         res = res[:len(res)-1]
 
-    res+="]"
+    res += "]"
     return HttpResponse(res, content_type="application/json")
-    
-
 
 
 # def create(self, validated_data):
@@ -86,5 +95,3 @@ class WeatherInfoViewSet(CustomModelViewSet):
     serializer_class = WeatherInfoSerializer
     filter_fields = ['temperature', 'date_recorded']
     search_fields = ['temperature']
-
-

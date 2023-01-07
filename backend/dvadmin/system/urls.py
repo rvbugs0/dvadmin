@@ -50,7 +50,8 @@ urlpatterns = [
 
 
     path('weatherinfo/all_records/',all_records),
-    path('weatherinfo/get_average_temperatures/',average_temperatures)
+    path('weatherinfo/get_average_temperatures/',average_temperatures),
+    path('weatherinfo/get_by_range/',get_by_range)
 
 ]
 urlpatterns += system_url.urls

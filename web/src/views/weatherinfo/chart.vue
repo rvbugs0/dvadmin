@@ -24,6 +24,12 @@ const urlPrefix = '/api/system/weatherinfo/'
 import { request } from '@/api/service'
 export default {
     name: 'charview',
+    head: {
+        script: [
+            { type: 'text/javascript', src: 'https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js', async: false, body: false }, // Insert in body
+        ],
+    }
+    ,
 
     data() {
         return {
@@ -36,18 +42,21 @@ export default {
     }, created() {
 
 
+
     }, watch: {
 
     }
     , mounted() {
 
-        //adding apache echarts
+        // adding apache echarts
         const script = document.createElement("script");
         script.setAttribute(
             "src",
             "https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"
         );
         document.head.appendChild(script);
+
+
 
         var dom = document.getElementById('container');
         var myChart = echarts.init(dom, null, {
