@@ -18,5 +18,7 @@ module.exports = [
   { name: 'lowdb', library: 'low', js: 'https://unpkg.com/lowdb@1.0.0/dist/low.min.js', css: '' },
   { name: 'lowdb/adapters/LocalStorage', library: 'LocalStorage', js: 'https://unpkg.com/lowdb@1.0.0/dist/LocalStorage.min.js', css: '' },
   { name: 'screenfull', library: 'screenfull', js: 'https://unpkg.com/screenfull@5.0.2/dist/screenfull.js', css: '' },
-  { name: 'sortablejs', library: 'Sortable', js: 'https://unpkg.com/sortablejs@1.10.1/Sortable.min.js', css: '' }
+  { name: 'sortablejs', library: 'Sortable', js: 'https://unpkg.com/sortablejs@1.10.1/Sortable.min.js', css: '' },
+
+  // {name:'apache-echarts',library:'',js:'https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js', css:''}
 ]

@@ -37,6 +37,8 @@ def get_by_range(request):
     queryset = WeatherInfo.objects.filter(date_recorded__range=(from_date, to_date)).order_by("date_recorded")
     read_serializer = WeatherInfoSerializer(queryset, many=True)
     return Response(read_serializer.data)
+    
+
 
 
 @api_view(('GET',))

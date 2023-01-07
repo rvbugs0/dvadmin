@@ -1,6 +1,6 @@
 <template>
 
-  <div class="main_div" style="height: 100%; padding: 40px;background-color: #fff;">
+  <div class="main_div" style="padding: 40px;background-color: #fff;height100%;">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
       integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -20,7 +20,7 @@
 
     </div>
 
-    <table class="table">
+    <table  class="table" >
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -104,35 +104,6 @@ export default {
 
 
 
-    function getForDates() {
-      let fromDate = fromDateInput.value;
-      let toDate = toDateInput.value;
-      a = async function getRecords() {
-        const res = await fetch("/get_by_range?" + new URLSearchParams({
-          to_date: toDate,
-          from_date: fromDate,
-        }));
-        const finalRes = await res.json();
-        ht = "";
-        x = 1
-        for (i in finalRes) {
-          ht += "<tr><td>"
-          ht += (x)
-          ht += "</td><td>"
-          ht += finalRes[i].temperature
-          ht += "</td><td>"
-          ht += finalRes[i].date_recorded
-          ht += "</td></tr>"
-          x += 1
-        }
-        console.log(ht)
-        tBody.innerHTML = ht;
-
-
-
-      }();
-
-    }
 
   }
 }
