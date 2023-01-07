@@ -29,16 +29,16 @@ def all_records(request):
     read_serializer = WeatherInfoSerializer(queryset, many=True)
     return Response(read_serializer.data)
 
+
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def get_by_range(request):
     to_date = request.GET["to_date"]
     from_date = request.GET["from_date"]
-    queryset = WeatherInfo.objects.filter(date_recorded__range=(from_date, to_date)).order_by("date_recorded")
+    queryset = WeatherInfo.objects.filter(date_recorded__range=(
+        from_date, to_date)).order_by("date_recorded")
     read_serializer = WeatherInfoSerializer(queryset, many=True)
     return Response(read_serializer.data)
-    
-
 
 
 @api_view(('GET',))

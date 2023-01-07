@@ -31,7 +31,7 @@ system_url.register(r'area', AreaViewSet)
 system_url.register(r'file', FileViewSet)
 system_url.register(r'api_white_list', ApiWhiteListViewSet)
 system_url.register(r'system_config', SystemConfigViewSet)
-system_url.register(r'message_center',MessageCenterViewSet)
+system_url.register(r'message_center', MessageCenterViewSet)
 
 
 # system_url.register(r'weatherinfo',WeatherInfoViewSet)
@@ -39,19 +39,24 @@ system_url.register(r'message_center',MessageCenterViewSet)
 
 urlpatterns = [
     path('user/export/', UserViewSet.as_view({'post': 'export_data', })),
-    path('user/import/', UserViewSet.as_view({'get': 'import_data', 'post': 'import_data'})),
-    path('system_config/save_content/', SystemConfigViewSet.as_view({'put': 'save_content'})),
-    path('system_config/get_association_table/', SystemConfigViewSet.as_view({'get': 'get_association_table'})),
-    path('system_config/get_table_data/<int:pk>/', SystemConfigViewSet.as_view({'get': 'get_table_data'})),
-    path('system_config/get_relation_info/', SystemConfigViewSet.as_view({'get': 'get_relation_info'})),
+    path('user/import/',
+         UserViewSet.as_view({'get': 'import_data', 'post': 'import_data'})),
+    path('system_config/save_content/',
+         SystemConfigViewSet.as_view({'put': 'save_content'})),
+    path('system_config/get_association_table/',
+         SystemConfigViewSet.as_view({'get': 'get_association_table'})),
+    path('system_config/get_table_data/<int:pk>/',
+         SystemConfigViewSet.as_view({'get': 'get_table_data'})),
+    path('system_config/get_relation_info/',
+         SystemConfigViewSet.as_view({'get': 'get_relation_info'})),
     path('login_log/', LoginLogViewSet.as_view({'get': 'list'})),
     path('login_log/<int:pk>/', LoginLogViewSet.as_view({'get': 'retrieve'})),
     path('dept_lazy_tree/', DeptViewSet.as_view({'get': 'dept_lazy_tree'})),
 
 
-    path('weatherinfo/all_records/',all_records),
-    path('weatherinfo/get_average_temperatures/',average_temperatures),
-    path('weatherinfo/get_by_range/',get_by_range)
+    path('weatherinfo/all_records/', all_records),
+    path('weatherinfo/get_average_temperatures/', average_temperatures),
+    path('weatherinfo/get_by_range/', get_by_range)
 
 ]
 urlpatterns += system_url.urls

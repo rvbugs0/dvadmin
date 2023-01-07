@@ -1,6 +1,6 @@
 <template>
 
-  <div class="main_div" style="padding: 40px;background-color: #fff;height100%;">
+  <div class="main_div" style="padding: 40px;background-color: #fff;">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
       integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -8,9 +8,9 @@
     <br>
     <div style="margin: 20px;">
       <strong>From: </strong>
-      <input type="date" id="fromDate" name="fromDate" v-model="fromDate"  v-bind:max="today" >
+      <input type="date" id="fromDate" name="fromDate" v-model="fromDate" v-bind:max="today">
       <strong style="margin-left: 20px;">To: </strong>
-      <input type="date" id="toDate" name="toDate"  v-model="toDate"  v-bind:max="today" v-bind:min="fromDate">
+      <input type="date" id="toDate" name="toDate" v-model="toDate" v-bind:max="today" v-bind:min="fromDate">
 
       <button style="margin-left: 10px;" type="button" id="submitButton" v-on:click="getDataForRange()">Submit</button>
       <button style="margin-left: 30px;" v-on:click="getAllRecords();">Show All Records</button>
@@ -20,23 +20,23 @@
 
     </div>
     <div class="table_wrapper" style="width: 100%;    height:400px;overflow: auto;">
-    <table  class="table" >
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Temperature in Degree Celcius</th>
-          <th scope="col">Date Recorded</th>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Temperature in Degree Celcius</th>
+            <th scope="col">Date Recorded</th>
 
-        </tr>
-      </thead>
-      <tbody id="tableBody">
-        <tr v-for="(item, index) in listItems">
-          <td>{{ (index + 1) }}</td>
-          <td>{{ item.temperature }}</td>
-          <td>{{ item.date_recorded }}</td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr v-for="(item, index) in listItems">
+            <td>{{ (index + 1) }}</td>
+            <td>{{ item.temperature }}</td>
+            <td>{{ item.date_recorded }}</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
 
@@ -67,14 +67,13 @@ export default {
       var address = this;
       request({ url: urlPrefix + 'all_records/', method: 'get', }).then(function (data) { address.listItems = data });
     },
-    getDataForRange()
-    {
+    getDataForRange() {
       this.listItems = []
       var address = this;
       var queryparams = {}
       queryparams.from_date = this.fromDate
       queryparams.to_date = this.toDate
-      request({ url: urlPrefix + 'get_by_range/', method: 'get', params:queryparams }).then(function (data) { address.listItems = data });
+      request({ url: urlPrefix + 'get_by_range/', method: 'get', params: queryparams }).then(function (data) { address.listItems = data });
 
 
     }
@@ -99,7 +98,7 @@ export default {
 
     // fromDateInput.value = this.today;
     // toDateInput.value = this.today;
-    
+
 
 
 
