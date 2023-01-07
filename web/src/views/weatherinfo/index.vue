@@ -7,9 +7,9 @@
         <br>
         <div style="margin: 20px;">
             <strong>From: </strong>
-            <input type="date" id="fromDate" name="fromDate" onchange="fromChanged(this.value)">
+            <input type="date" id="fromDate"  name="fromDate" v-model="fromDate">
             <strong style="margin-left: 20px;">To: </strong>
-            <input type="date" id="toDate" name="toDate">
+            <input type="date" id="toDate" name="toDate" v-model="toDate">
 
             <button style="margin-left: 10px;" type="button" id="submitButton" onclick="getForDates()">Submit</button>
             <button style="margin-left: 30px;" v-on:click="getAllRecords();">Show All Records</button>
@@ -37,8 +37,11 @@
   </tbody>
 </table>
 
-        </div>
 
+
+
+        </div>
+        
   </template>
   
   <script>
@@ -50,41 +53,92 @@ import { request } from '@/api/service'
     
     data () {
       return {
-
-        listItems : [{temperature:29,"date_recorded":"2022"}]
+        
+              listItems : [],
+        today : new Date().toISOString().substr(0, 10),        
+    fromDate: new Date().toISOString().substr(0, 10),        
+        toDate:new Date().toISOString().substr(0, 10),        
 
 
       }
+
     },
     methods: {
-            // async getAllRecords(){
-            // const res = await fetch("/api/system/weatherinfo/all_records/");
-            // const finalRes = await res.json();
-            // this.listItems = finalRes;
             getAllRecords(){
-            
-            request({
-    url: urlPrefix + 'all_records/',
-    method: 'get',
-  });
-  
+                this.listItems = []
+                var address= this;
 
-//   finalres  = await res.Array
-// this.listItems = finalres
-  
-  
-//   api.GetList().then(result => result.data);
-//                 console.log(api.GetList(this.listItems))
+            var li = this.listItems
+            request({    url: urlPrefix + 'all_records/',method: 'get',}).then(function(data){address.listItems = data});
+        }
+
+    },created(){
+        var address= this;
+
+var li = this.listItems
+request({    url: urlPrefix + 'all_records/',method: 'get',}).then(function(data){address.listItems = data});
+
+    },watch:{
+        fromChanged:function(newValue,oldValue){
+            this.toDate  =this.today;
+            // toDate.min = newDate;
 
         }
+    }
+    ,mounted()
+    {
+
+
+        var fromDateInput = document.getElementById("fromDate");
+        var toDateInput = document.getElementById("toDate");
+
+  fromDateInput.value = this.today;
+  fromDate.max = this.today;
+  toDateInput.value  =this.today;
+  toDateInput.max= this.today;
+  
+
+
+
+
+
+  function getForDates()
+  {
+    let fromDate = fromDateInput.value;
+    let toDate = toDateInput.value;
+    a  = async function getRecords() {
+    const res = await fetch("/get_by_range?"+ new URLSearchParams({
+    to_date: toDate,
+    from_date: fromDate,
+}));
+    const finalRes = await res.json();
+    ht = "";
+    x = 1
+    for (i in finalRes)
+    {
+      ht+="<tr><td>"
+      ht+=(x)
+      ht+="</td><td>"
+      ht+=finalRes[i].temperature
+      ht+="</td><td>"
+      ht+=finalRes[i].date_recorded
+      ht+="</td></tr>"
+      x+=1
+    }
+    console.log(ht)
+    tBody.innerHTML = ht;
+    
+    
+
+  }();
+
+  }
+
     }
   }
 
 
-  
-  
-
-
-
 
 </script>
+
+
