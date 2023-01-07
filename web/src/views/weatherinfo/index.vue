@@ -19,7 +19,7 @@
       <br>
 
     </div>
-
+    <div class="table_wrapper" style="width: 100%;    height:400px;overflow: auto;">
     <table  class="table" >
       <thead>
         <tr>
@@ -38,6 +38,7 @@
       </tbody>
     </table>
 
+    </div>
 
 
 
