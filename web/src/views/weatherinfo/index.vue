@@ -1,141 +1,138 @@
 <template>
 
-    <div class="main_div" style="height: 100%; padding: 40px;background-color: #fff;">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <div class="main_div" style="height: 100%; padding: 40px;background-color: #fff;">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-        <h3>Pick Dates: </h3>  
-        <br>
-        <div style="margin: 20px;">
-            <strong>From: </strong>
-            <input type="date" id="fromDate"  name="fromDate" v-model="fromDate">
-            <strong style="margin-left: 20px;">To: </strong>
-            <input type="date" id="toDate" name="toDate" v-model="toDate">
+    <h3>Pick Dates: </h3>
+    <br>
+    <div style="margin: 20px;">
+      <strong>From: </strong>
+      <input type="date" id="fromDate" name="fromDate" v-model="fromDate">
+      <strong style="margin-left: 20px;">To: </strong>
+      <input type="date" id="toDate" name="toDate" v-model="toDate">
 
-            <button style="margin-left: 10px;" type="button" id="submitButton" onclick="getForDates()">Submit</button>
-            <button style="margin-left: 30px;" v-on:click="getAllRecords();">Show All Records</button>
-            
-            <br>
-            <br>
-        
-        </div>
+      <button style="margin-left: 10px;" type="button" id="submitButton" onclick="getForDates()">Submit</button>
+      <button style="margin-left: 30px;" v-on:click="getAllRecords();">Show All Records</button>
 
-        <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Temperature in Degree Celcius</th>
-      <th scope="col">Date Recorded</th>
-      
-    </tr>
-  </thead>
-  <tbody id="tableBody">
-    <tr v-for="(item,index) in listItems">
-        <td>{{ (index+1) }}</td>
-        <td>{{ item.temperature }}</td>
-        <td>{{ item.date_recorded }}</td>
-    </tr>
-  </tbody>
-</table>
+      <br>
+      <br>
 
+    </div>
 
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Temperature in Degree Celcius</th>
+          <th scope="col">Date Recorded</th>
+
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr v-for="(item, index) in listItems">
+          <td>{{ (index + 1) }}</td>
+          <td>{{ item.temperature }}</td>
+          <td>{{ item.date_recorded }}</td>
+        </tr>
+      </tbody>
+    </table>
 
 
-        </div>
-        
-  </template>
+
+
+  </div>
+
+</template>
   
-  <script>
-import * as api from './api'
+<script>
 const urlPrefix = '/api/system/weatherinfo/'
 import { request } from '@/api/service'
-  export default {
-    name: 'weatherinfo',
-    
-    data () {
-      return {
-        
-              listItems : [],
-        today : new Date().toISOString().substr(0, 10),        
-    fromDate: new Date().toISOString().substr(0, 10),        
-        toDate:new Date().toISOString().substr(0, 10),        
+export default {
+  name: 'weatherinfo',
+
+  data() {
+    return {
+
+      listItems: [],
+      today: new Date().toISOString().substr(0, 10),
+      fromDate: new Date().toISOString().substr(0, 10),
+      toDate: new Date().toISOString().substr(0, 10),
 
 
-      }
-
-    },
-    methods: {
-            getAllRecords(){
-                this.listItems = []
-                var address= this;
-
-            var li = this.listItems
-            request({    url: urlPrefix + 'all_records/',method: 'get',}).then(function(data){address.listItems = data});
-        }
-
-    },created(){
-        var address= this;
-
-var li = this.listItems
-request({    url: urlPrefix + 'all_records/',method: 'get',}).then(function(data){address.listItems = data});
-
-    },watch:{
-        fromChanged:function(newValue,oldValue){
-            this.toDate  =this.today;
-            // toDate.min = newDate;
-
-        }
     }
-    ,mounted()
-    {
 
+  },
+  methods: {
+    getAllRecords() {
+      this.listItems = []
+      var address = this;
 
-        var fromDateInput = document.getElementById("fromDate");
-        var toDateInput = document.getElementById("toDate");
-
-  fromDateInput.value = this.today;
-  fromDate.max = this.today;
-  toDateInput.value  =this.today;
-  toDateInput.max= this.today;
-  
-
-
-
-
-
-  function getForDates()
-  {
-    let fromDate = fromDateInput.value;
-    let toDate = toDateInput.value;
-    a  = async function getRecords() {
-    const res = await fetch("/get_by_range?"+ new URLSearchParams({
-    to_date: toDate,
-    from_date: fromDate,
-}));
-    const finalRes = await res.json();
-    ht = "";
-    x = 1
-    for (i in finalRes)
-    {
-      ht+="<tr><td>"
-      ht+=(x)
-      ht+="</td><td>"
-      ht+=finalRes[i].temperature
-      ht+="</td><td>"
-      ht+=finalRes[i].date_recorded
-      ht+="</td></tr>"
-      x+=1
+      var li = this.listItems
+      request({ url: urlPrefix + 'all_records/', method: 'get', }).then(function (data) { address.listItems = data });
     }
-    console.log(ht)
-    tBody.innerHTML = ht;
-    
-    
 
-  }();
+  }, created() {
+    var address = this;
 
-  }
+    var li = this.listItems
+    request({ url: urlPrefix + 'all_records/', method: 'get', }).then(function (data) { address.listItems = data });
+
+  }, watch: {
+    fromChanged: function (newValue, oldValue) {
+      this.toDate = this.today;
+      // toDate.min = newDate;
 
     }
   }
+  , mounted() {
+
+
+    var fromDateInput = document.getElementById("fromDate");
+    var toDateInput = document.getElementById("toDate");
+
+    fromDateInput.value = this.today;
+    fromDate.max = this.today;
+    toDateInput.value = this.today;
+    toDateInput.max = this.today;
+
+
+
+
+
+
+    function getForDates() {
+      let fromDate = fromDateInput.value;
+      let toDate = toDateInput.value;
+      a = async function getRecords() {
+        const res = await fetch("/get_by_range?" + new URLSearchParams({
+          to_date: toDate,
+          from_date: fromDate,
+        }));
+        const finalRes = await res.json();
+        ht = "";
+        x = 1
+        for (i in finalRes) {
+          ht += "<tr><td>"
+          ht += (x)
+          ht += "</td><td>"
+          ht += finalRes[i].temperature
+          ht += "</td><td>"
+          ht += finalRes[i].date_recorded
+          ht += "</td></tr>"
+          x += 1
+        }
+        console.log(ht)
+        tBody.innerHTML = ht;
+
+
+
+      }();
+
+    }
+
+  }
+}
 
 
 

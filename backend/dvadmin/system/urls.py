@@ -16,7 +16,7 @@ from dvadmin.system.views.system_config import SystemConfigViewSet
 from dvadmin.system.views.user import UserViewSet
 
 # ---------------------
-from dvadmin.weatherinfo.views.weatherview import all_records
+from dvadmin.weatherinfo.views.weatherview import *
 
 
 system_url = routers.SimpleRouter()
@@ -49,7 +49,8 @@ urlpatterns = [
     path('dept_lazy_tree/', DeptViewSet.as_view({'get': 'dept_lazy_tree'})),
 
 
-    path('weatherinfo/all_records/',all_records)
+    path('weatherinfo/all_records/',all_records),
+    path('weatherinfo/get_average_temperatures/',average_temperatures)
 
 ]
 urlpatterns += system_url.urls
