@@ -33,8 +33,7 @@ system_url.register(r'api_white_list', ApiWhiteListViewSet)
 system_url.register(r'system_config', SystemConfigViewSet)
 system_url.register(r'message_center', MessageCenterViewSet)
 
-
-# system_url.register(r'weatherinfo',WeatherInfoViewSet)
+system_url.register(r'weatherinfo',WeatherInfoViewSet)
 
 
 urlpatterns = [

@@ -10,15 +10,37 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
+from dvadmin.utils.serializers import CustomModelSerializer
 
-class WeatherInfoSerializer(serializers.ModelSerializer):
+
+class WeatherInfoSerializer(CustomModelSerializer):
+    """
+    接口白名单-序列化器
+    """
     temperature = serializers.FloatField(required=True)
     date_recorded = serializers.DateField(required=True)
 
     class Meta:
         model = WeatherInfo
-        fields = ['temperature', 'date_recorded']
+        fields = "__all__"
         read_only_fields = ["id"]
+
+
+
+class WeatherInfoViewSet(CustomModelViewSet):
+    """
+    部门管理接口
+    list:查询
+    create:新增
+    update:修改
+    retrieve:单例
+    destroy:删除
+    """
+    queryset = WeatherInfo.objects.all()
+    serializer_class = WeatherInfoSerializer
+
+
+# view set has all the basic apis and custom api's are addded below and their urls also added in the urls.py
 
 
 @api_view(('GET',))
@@ -75,25 +97,3 @@ def average_temperatures(request):
 
     res += "]"
     return HttpResponse(res, content_type="application/json")
-
-
-# def create(self, validated_data):
-#     # Once the request data has been validated, we can create a todo item instance in the database
-#     return WeatherInfo.objects.create(
-#       temperature=validated_data.get('temperature'),
-#       date_recorded = validated_data.get('date_recorded')
-#     )
-
-class WeatherInfoViewSet(CustomModelViewSet):
-    """
-    部门管理接口
-    list:查询
-    create:新增
-    update:修改
-    retrieve:单例
-    destroy:删除
-    """
-    queryset = WeatherInfo.objects.all()
-    serializer_class = WeatherInfoSerializer
-    filter_fields = ['temperature', 'date_recorded']
-    search_fields = ['temperature']

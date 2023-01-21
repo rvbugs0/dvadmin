@@ -7,15 +7,23 @@ from django.db import models
 from application import dispatch
 from dvadmin.utils.models import CoreModel, table_prefix
 
+# 0-disabled, 1-enabled
 STATUS_CHOICES = (
     (0, "禁用"),
     (1, "启用"),
+    
 )
 
 
 class WeatherInfo(CoreModel):
     temperature = models.FloatField()
     date_recorded  = models.DateField()
+
+    # class Meta:
+    #     db_table = table_prefix + "weather_data"
+    #     verbose_name = "WeatherDataTable"
+    #     verbose_name_plural = verbose_name
+    #     ordering = ("-create_datetime",)
 
 
 
@@ -34,6 +42,7 @@ class Users(CoreModel,AbstractUser):
         choices=GENDER_CHOICES, default=0, verbose_name="性别", null=True, blank=True, help_text="性别"
     )
     USER_TYPE = (
+        # 0-background user, 1-foreground user
         (0, "后台用户"),
         (1, "前台用户"),
     )
@@ -67,6 +76,8 @@ class Post(CoreModel):
     code = models.CharField(max_length=32, verbose_name="岗位编码", help_text="岗位编码")
     sort = models.IntegerField(default=1, verbose_name="岗位顺序", help_text="岗位顺序")
     STATUS_CHOICES = (
+
+        # Resigned-0, working-1
         (0, "离职"),
         (1, "在职"),
     )
