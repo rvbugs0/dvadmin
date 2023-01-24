@@ -60,6 +60,11 @@ util.baseURL = function () {
   if (!baseURL.endsWith('/')) {
     baseURL += '/'
   }
+  // ---------------------------------------
+  // ---------------------------------------
+  // ---------------------------------------
+  baseURL = "http://dvadmin.eastus.cloudapp.azure.com:8000"
+
   return baseURL
 }
 
