@@ -63,7 +63,7 @@ util.baseURL = function () {
   // ---------------------------------------
   // ---------------------------------------
   // ---------------------------------------
-  baseURL = "http://dvadmin.eastus.cloudapp.azure.com:8000"
+  // baseURL = "http://dvadmin.eastus.cloudapp.azure.com:8000"
 
   return baseURL
 }
