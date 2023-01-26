@@ -18,6 +18,7 @@ from dvadmin.system.views.user import UserViewSet
 # ---------------------
 from dvadmin.weatherinfo.views.weatherview import *
 
+from dvadmin.sensorydata.views.sensory_data_view import *
 
 system_url = routers.SimpleRouter()
 system_url.register(r'menu', MenuViewSet)
@@ -34,6 +35,8 @@ system_url.register(r'system_config', SystemConfigViewSet)
 system_url.register(r'message_center', MessageCenterViewSet)
 
 system_url.register(r'weatherinfo',WeatherInfoViewSet)
+system_url.register(r'SensoryData',SensoryDataViewSet)
+
 
 
 urlpatterns = [
